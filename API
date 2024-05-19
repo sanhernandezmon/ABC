@@ -1,0 +1,941 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "ABC",
+        "version": "1.0.0",
+        "description": "Api para registro de informacion de candidatos y novedades",
+        "contact": {
+            "name": "Open Data Portal",
+            "url": "https://developer.uspto.gov",
+            "email": "developer@uspto.gov"
+        }
+    },
+    "servers": [
+        {
+            "url": "{scheme}://developer.uspto.gov/ds-api",
+            "variables": {
+                "scheme": {
+                    "enum": [
+                        "https",
+                        "http"
+                    ],
+                    "default": "https",
+                    "description": "The Data Set API is accessible via https and http"
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/employee": {
+            "put": {
+                "requestBody": {
+                    "description": "Solo se deben enviar los datos a actualizar",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Persona"
+                            }
+                        }
+                    },
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/personResponse"
+                    }
+                }
+            },
+            "post": {
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Persona"
+                            },
+                            "examples": {
+                                "personExample": {
+                                    "value": {
+                                        "numdocumento": 123456789,
+                                        "nombre": "John",
+                                        "apellido": "Doe",
+                                        "fechanacimiento": 1990,
+                                        "telefono": 1234567890,
+                                        "RH": "O+"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/personResponse"
+                    }
+                }
+            }
+        },
+        "/employee/skills": {
+            "summary": "Creacion de persona",
+            "post": {
+                "requestBody": {
+                    "description": "\r\n",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Habilidades"
+                            },
+                            "examples": {
+                                "SkillsExample": {
+                                    "value": [
+                                        {
+                                            "habilidades": [
+                                                {
+                                                    "persona_id": 56,
+                                                    "habilidad_id": 8
+                                                },
+                                                {
+                                                    "persona_id": 43,
+                                                    "habilidad_id": 47
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/HabilidadesResponse"
+                    }
+                }
+            }
+        },
+        "/asigment": {
+            "put": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AsignacionUpdate"
+                            },
+                            "examples": {
+                                "AsinacionUpdateExample": {
+                                    "value": [
+                                        {
+                                            "asignacion_id": 1,
+                                            "state": "wkhrtlld3"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/AsignacionResponse"
+                    }
+                }
+            },
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Asignacion"
+                            },
+                            "examples": {
+                                "AsignacionExample": {
+                                    "value": [
+                                        {
+                                            "oflizada_id": 72,
+                                            "persona_id": 52,
+                                            "fechainicio": "2018-01-17",
+                                            "fechafin": "2018-01-17",
+                                            "salario": 24,
+                                            "descripcion": "3lp",
+                                            "state": "47u"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/AsignacionResponse"
+                    }
+                }
+            }
+        },
+        "/docs": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Docs"
+                            },
+                            "examples": {
+                                "DocsExample": {
+                                    "value": {
+                                        "employee_id": "123456",
+                                        "files": [
+                                            {
+                                                "file_name": "Resume",
+                                                "file_type": "pdf",
+                                                "file_link": "https://example.com/employee123456/resume.pdf"
+                                            },
+                                            {
+                                                "file_name": "Offer Letter",
+                                                "file_type": "docx",
+                                                "file_link": "https://example.com/employee123456/offer_letter.docx"
+                                            },
+                                            {
+                                                "file_name": "ID Card",
+                                                "file_type": "jpg",
+                                                "file_link": "https://example.com/employee123456/id_card.jpg"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/DocsResponse"
+                    }
+                }
+            }
+        },
+        "/validations": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Persona"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/ValidationsResponse"
+                    }
+                }
+            }
+        },
+        "/update": {
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Notification"
+                            },
+                            "examples": {
+                                "Notification Example": {
+                                    "value": {
+                                        "person_id": "987654",
+                                        "description": "New employee onboarded successfully. Please update all systems accordingly."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "enum": [
+                                        "Success",
+                                        "Failed"
+                                    ],
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "enum that respond status of the request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Persona": {
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "numdocumento": {
+                                "format": "int32",
+                                "type": "integer"
+                            },
+                            "nombre": {
+                                "type": "string"
+                            },
+                            "apellido": {
+                                "type": "string"
+                            },
+                            "fechanacimiento": {
+                                "format": "int32",
+                                "type": "integer"
+                            },
+                            "telefono": {
+                                "format": "int32",
+                                "type": "integer"
+                            },
+                            "RH": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "title": "Root Type for Persona",
+                "description": "This endpoint recieves basic data of an employee and saves it in the database asingning a unic id",
+                "type": "object",
+                "example": {
+                    "numdocumento": 123456789,
+                    "nombre": "John",
+                    "apellido": "Doe",
+                    "fechanacimiento": 1990,
+                    "telefono": 1234567890,
+                    "RH": "O+"
+                }
+            },
+            "Asignacion": {
+                "title": "Root Type for Asignacion",
+                "description": "",
+                "required": [
+                    "persona_id",
+                    "oferta_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "persona_id": {
+                        "format": "int32",
+                        "description": "id de la persona",
+                        "type": "integer",
+                        "example": "456"
+                    },
+                    "fechainicio": {
+                        "format": "date",
+                        "description": "fecha inicio de la asignacion",
+                        "type": "string",
+                        "example": "20/10/2020"
+                    },
+                    "fechafin": {
+                        "format": "date",
+                        "description": "fecha finalizacion de la asignacion",
+                        "type": "string",
+                        "example": "20/10/2021"
+                    },
+                    "salario": {
+                        "format": "int32",
+                        "description": "salario de la asignacion",
+                        "type": "integer",
+                        "example": "20000"
+                    },
+                    "descripcion": {
+                        "description": "descripcion de la asignacion",
+                        "type": "string",
+                        "example": "realizar proceso de actualizacion a la base de datos ABC"
+                    },
+                    "state": {
+                        "description": "enum que describe el estado de la asignacion",
+                        "type": "string",
+                        "example": "In_Progress"
+                    },
+                    "oferta_id": {
+                        "format": "int32",
+                        "description": "id de la oferta",
+                        "type": "integer",
+                        "example": "123"
+                    }
+                },
+                "example": {
+                    "oferta_id": 1,
+                    "persona_id": 1,
+                    "fechainicio": "2024-05-10",
+                    "fechafin": "2024-11-10",
+                    "salario": 50000,
+                    "descripcion": "Full-time position as a Software Engineer",
+                    "state": "started"
+                }
+            },
+            "PersonaReponse": {
+                "title": "Root Type for PersonaReponse",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "persona_id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "numdocumento": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "type": "string"
+                    },
+                    "fechanacimiento": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "telefono": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "RH": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "persona_id": 1,
+                    "numdocumento": 123456789,
+                    "nombre": "John",
+                    "apellido": "Doe",
+                    "fechanacimiento": 1990,
+                    "telefono": 1234567890,
+                    "RH": "O+"
+                }
+            },
+            "HabilidadesResponse": {
+                "title": "Root Type for HabilidadesResponse",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "habilidades": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "habpersona_id": {
+                                    "format": "int32",
+                                    "type": "integer"
+                                },
+                                "persona_id": {
+                                    "format": "int32",
+                                    "type": "integer"
+                                },
+                                "habilidad_id": {
+                                    "format": "int32",
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                },
+                "example": {
+                    "habilidades": [
+                        {
+                            "habpersona_id": 1,
+                            "persona_id": 1,
+                            "habilidad_id": 101
+                        },
+                        {
+                            "habpersona_id": 2,
+                            "persona_id": 1,
+                            "habilidad_id": 102
+                        }
+                    ]
+                }
+            },
+            "Habilidades": {
+                "title": "Root Type for Skills",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "habilidades": {
+                        "description": "Habilidades requeridas",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Habilidad"
+                        },
+                        "example": "[]"
+                    }
+                },
+                "example": {
+                    "habilidades": [
+                        {
+                            "persona_id": 1,
+                            "habilidad_id": 101
+                        },
+                        {
+                            "persona_id": 1,
+                            "habilidad_id": 102
+                        }
+                    ]
+                }
+            },
+            "AsignacionUpdate": {
+                "title": "Root Type for AsignacionUpdate",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "asignacion_id": {
+                        "format": "int32",
+                        "description": "id de la asignacion actualizada",
+                        "type": "integer",
+                        "example": "789"
+                    },
+                    "state": {
+                        "description": "estado de la asignacion actualizada",
+                        "type": "string",
+                        "example": "closed"
+                    }
+                },
+                "example": {
+                    "asignacion_id": 1,
+                    "state": "in_progress"
+                }
+            },
+            "AsignacionResponse": {
+                "title": "Root Type for Asignacion",
+                "description": "",
+                "required": [
+                    "persona_id",
+                    "oferta_id",
+                    "asignacion_id"
+                ],
+                "type": "object",
+                "properties": {
+                    "persona_id": {
+                        "format": "int32",
+                        "description": "id de la persona",
+                        "type": "integer",
+                        "example": "456"
+                    },
+                    "fechainicio": {
+                        "format": "date",
+                        "description": "fecha inicio de la asignacion",
+                        "type": "string",
+                        "example": "20/10/2020"
+                    },
+                    "fechafin": {
+                        "format": "date",
+                        "description": "fecha finalizacion de la asignacion",
+                        "type": "string",
+                        "example": "20/10/2021"
+                    },
+                    "salario": {
+                        "format": "int32",
+                        "description": "salario de la asignacion",
+                        "type": "integer",
+                        "example": "20000"
+                    },
+                    "descripcion": {
+                        "description": "descripcion de la asignacion",
+                        "type": "string",
+                        "example": "realizar proceso de actualizacion a la base de datos ABC"
+                    },
+                    "state": {
+                        "description": "enum que describe el estado de la asignacion",
+                        "type": "string",
+                        "example": "In_Progress"
+                    },
+                    "oferta_id": {
+                        "format": "int32",
+                        "description": "id de la oferta",
+                        "type": "integer",
+                        "example": "123"
+                    },
+                    "asignacion_id": {
+                        "format": "int32",
+                        "description": "id de la asignacion",
+                        "type": "integer",
+                        "example": "789"
+                    }
+                },
+                "example": {
+                    "oferta_id": 1,
+                    "persona_id": 1,
+                    "fechainicio": "2024-05-10",
+                    "fechafin": "2024-11-10",
+                    "salario": 50000,
+                    "descripcion": "Full-time position as a Software Engineer",
+                    "state": "started"
+                }
+            },
+            "Docs": {
+                "title": "Root Type for Docs",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "files": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/file"
+                        },
+                        "example": "{\n            \"file_name\": \"Resume\",\n            \"file_type\": \"pdf\",\n            \"file_link\": \"https://example.com/employee123456/resume.pdf\"\n        },\n        {\n            \"file_name\": \"Offer Letter\",\n            \"file_type\": \"docx\",\n            \"file_link\": \"https://example.com/employee123456/offer_letter.docx\"\n        },\n        {\n            \"file_name\": \"ID Card\",\n            \"file_type\": \"jpg\",\n            \"file_link\": \"https://example.com/employee123456/id_card.jpg\"\n        }"
+                    },
+                    "person_id": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "employee_id": "123456",
+                    "files": [
+                        {
+                            "file_name": "Resume",
+                            "file_type": "pdf",
+                            "file_link": "https://example.com/employee123456/resume.pdf"
+                        },
+                        {
+                            "file_name": "Offer Letter",
+                            "file_type": "docx",
+                            "file_link": "https://example.com/employee123456/offer_letter.docx"
+                        },
+                        {
+                            "file_name": "ID Card",
+                            "file_type": "jpg",
+                            "file_link": "https://example.com/employee123456/id_card.jpg"
+                        }
+                    ]
+                }
+            },
+            "file": {
+                "title": "Root Type for file",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "file_name": {
+                        "type": "string"
+                    },
+                    "file_type": {
+                        "type": "string"
+                    },
+                    "file_link": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "file_name": "ID Card",
+                    "file_type": "jpg",
+                    "file_link": "https://example.com/employee123456/id_card.jpg"
+                }
+            },
+            "Habilidad": {
+                "title": "Root Type for Habilidad",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "persona_id": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "habilidad_id": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                },
+                "example": {
+                    "persona_id": 1,
+                    "habilidad_id": 101
+                }
+            },
+            "Validations": {
+                "title": "Root Type for Validations",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "background_check": {
+                        "type": "boolean"
+                    },
+                    "identity_verification": {
+                        "type": "boolean"
+                    },
+                    "reference_check": {
+                        "type": "boolean"
+                    },
+                    "training_completion": {
+                        "type": "boolean"
+                    },
+                    "access_rights_assigned": {
+                        "type": "boolean"
+                    }
+                },
+                "example": {
+                    "background_check": true,
+                    "identity_verification": true,
+                    "reference_check": true,
+                    "training_completion": false,
+                    "access_rights_assigned": true
+                }
+            },
+            "Notification": {
+                "title": "Root Type for Notification",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "person_id": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "person_id": "987654",
+                    "description": "New employee onboarded successfully. Please update all systems accordingly."
+                }
+            },
+            "update": {
+                "title": "Root Type for update",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "table": {
+                        "description": "name or id of the table",
+                        "type": "string",
+                        "example": "persona"
+                    },
+                    "inserted_id": {
+                        "description": "el id de la tabla insertada",
+                        "type": "string",
+                        "example": "12345"
+                    }
+                },
+                "example": {
+                    "table": "usersTable",
+                    "inserted_id": "12345678"
+                }
+            },
+            "updateScan": {
+                "description": "{\n    \"update_id\":\"32432\",\n    \"update_date\":\"20/20/2021\"\n}",
+                "type": "object"
+            },
+            "Contrato": {
+                "title": "Root Type for Contrato",
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "contract_id": {
+                        "type": "string"
+                    },
+                    "start_date": {
+                        "format": "date",
+                        "type": "string"
+                    },
+                    "end_date": {
+                        "format": "date",
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": "string"
+                    },
+                    "salary": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "employment_type": {
+                        "type": "string"
+                    },
+                    "benefits": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "probation_period": {
+                        "format": "int32",
+                        "type": "integer"
+                    },
+                    "working_hours": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "supervisor": {
+                        "type": "string"
+                    },
+                    "contract_signed_date": {
+                        "format": "date",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "contract_id": "CON12345",
+                    "start_date": "2024-05-12",
+                    "end_date": "2025-05-12",
+                    "position": "Software Engineer",
+                    "salary": 80000,
+                    "currency": "USD",
+                    "employment_type": "Full-time",
+                    "benefits": [
+                        "Health insurance",
+                        "Paid time off"
+                    ],
+                    "probation_period": 90,
+                    "working_hours": "40 hours per week",
+                    "location": "Remote",
+                    "supervisor": "Alice Johnson",
+                    "contract_signed_date": "2024-05-10"
+                }
+            }
+        },
+        "responses": {
+            "personResponse": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/PersonaReponse"
+                        },
+                        "examples": {
+                            "PersonExample": {
+                                "value": [
+                                    {
+                                        "persona_id": 5,
+                                        "numdocumento": 38,
+                                        "nombre": "pb3xdf",
+                                        "apellido": "1b",
+                                        "fechanacimiento": 38,
+                                        "telefono": 98,
+                                        "RH": ""
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "AsignacionResponse": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/AsignacionResponse"
+                        },
+                        "examples": {
+                            "AsignacionExample": {
+                                "value": [
+                                    {
+                                        "asignacion_id": 49,
+                                        "oflizada_id": 41,
+                                        "persona_id": 9,
+                                        "fechainicio": "2018-01-17",
+                                        "fechafin": "2018-01-17",
+                                        "salario": 24,
+                                        "descripcion": "l3",
+                                        "state": ""
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "HabilidadesResponse": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/HabilidadesResponse"
+                        },
+                        "examples": {
+                            "HabilidadesExample": {
+                                "value": [
+                                    {
+                                        "habilidades": [
+                                            {
+                                                "habpersona_id": 31,
+                                                "persona_id": 6,
+                                                "habilidad_id": 74
+                                            },
+                                            {
+                                                "habpersona_id": 72,
+                                                "persona_id": 49,
+                                                "habilidad_id": 79
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "DocsResponse": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/file"
+                            }
+                        },
+                        "examples": {
+                            "DocsExample": {
+                                "value": [
+                                    [
+                                        {
+                                            "file_name": "9lye72v2",
+                                            "file_type": "fbbg",
+                                            "file_link": ""
+                                        },
+                                        {
+                                            "file_name": "qt",
+                                            "file_type": "82c",
+                                            "file_link": "s"
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "ValidationsResponse": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Validations"
+                        },
+                        "examples": {
+                            "ValidationsExample": {
+                                "value": {
+                                    "background_check": false,
+                                    "identity_verification": false,
+                                    "reference_check": false,
+                                    "training_completion": false,
+                                    "access_rights_assigned": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": ""
+            },
+            "updateRegisterResponse": {
+                "description": "{\n    \"update_id\":\"1234\",\n    \"inserted_id\":\"764\",\n    \"table\":\"persona\"\n}"
+            }
+        }
+    }
+}
